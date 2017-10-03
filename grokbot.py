@@ -78,17 +78,6 @@ class GrokBot(commands.Bot):
         if to_load:
             self.load_extensions(to_load, 'cogs.community.')
 
-    @property
-    def token(self):
-        '''Returns your token wherever it is'''
-        with open('./data/config.json') as f:
-            config = json.load(f)
-            if config.get('TOKEN') == "your_token_here":
-                if not os.environ.get('TOKEN'):
-                    self.run_wizard()
-
-        return os.environ.get('TOKEN') or token
-
     @staticmethod
     async def get_pre(bot, message):
         '''Returns the prefix.'''
@@ -119,7 +108,7 @@ class GrokBot(commands.Bot):
         '''Starts the actual bot'''
         bot = bot()
         try:
-            bot.run(safe_token, reconnect=True)
+            bot.run(os.environ.get('TOKEN'), reconnect=True)
         except Exception as e:
             print(e)
 
