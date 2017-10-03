@@ -86,8 +86,6 @@ class GrokBot(commands.Bot):
             if config.get('TOKEN') == "your_token_here":
                 if not os.environ.get('TOKEN'):
                     self.run_wizard()
-            else:
-                token = config.get('TOKEN').strip('\"')
 
         return os.environ.get('TOKEN') or token
 
@@ -120,7 +118,6 @@ class GrokBot(commands.Bot):
     def init(bot, token=None):
         '''Starts the actual bot'''
         bot = bot()
-        safe_token = token or bot.token.strip('\"')
         try:
             bot.run(safe_token, reconnect=True)
         except Exception as e:
